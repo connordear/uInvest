@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <img src="../../assets/imgs/0.5x/bmo-logo.png" class="navbar-img">
+    <ion-title>Welcome to uInvest, {{ user.name | titlecase }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card>
+  </ion-card>
+
+  <ion-list class="asset-list">
+    <ion-list-header>
+      <ion-label>
+        Symbol
+      </ion-label>
+      <ion-label>
+        Quantity
+      </ion-label>
+      <ion-label>
+        Book Value
+      </ion-label>
+      <ion-label>
+        Market Value
+      </ion-label>
+      <ion-label>
+        Price
+      </ion-label>
+    </ion-list-header>
+    <ion-item-sliding #slidingItem *ngFor="let asset of assets; let i = index;">
+      <ion-item>
+        <ion-label>
+          {{ asset.symbol }}
+        </ion-label>
+        <ion-label>
+          {{ user.ownedAssets[i].quantity }}
+        </ion-label>
+        <ion-label>
+          {{ user.ownedAssets[i].bookValue }}
+        </ion-label>
+        <ion-label>
+          {{ user.ownedAssets[i].quantity * asset.price }}
+        </ion-label>
+        <ion-label>
+          {{ asset.price }}
+        </ion-label>
+        </ion-item>
+        <ion-item-options>
+          <button ion-button (click)="navToOrder(user, asset); slidingItem.close()">
+            Buy/Sell
+          </button>
+        </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

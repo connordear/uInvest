@@ -1,14 +1,23 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
+      <img src="../../assets/imgs/0.5x/bmo-logo.png" class="navbar-img">
     <ion-title>
-      Ionic Blank
+      uInvest Home
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  Select a User to begin exploring!
+  <ion-list>
+    <ion-item *ngFor="let user of users">
+      <button
+        ion-button
+        (click)="navToUser(user);"
+      >
+        {{ user.name }}
+      </button>
+    </ion-item>
+  </ion-list>
+
 </ion-content>
