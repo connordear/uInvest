@@ -10,6 +10,7 @@ import { HomePage } from '../pages/home/home';
 import { UserProvider } from '../providers/user/user';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { OrderPage } from '../pages/order/order';
+import { AssetProvider } from '../providers/asset/asset';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { OrderPage } from '../pages/order/order';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserProvider,
+    AssetProvider,
   ]
 })
 export class AppModule {}

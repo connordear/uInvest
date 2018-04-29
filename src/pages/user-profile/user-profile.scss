@@ -3,4 +3,65 @@ page-user-profile {
     max-width: 80%;
     margin: 0 auto;
   }
+  .balance {
+    text-align: center;
+  }
+  .balances {
+    max-width: 80%;
+    font-size: 32px;
+    margin: 0 auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    color: #087e8b;
+  }
+  .cash-balance {
+    text-align: right;
+    font-weight: 400;
+    padding-top: 14px;
+  }
+  .secondary {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  .red {
+    color: #ed1c24;
+  }
+  .green {
+    color: #04e762;
+  }
+  .research {
+    margin: 0 auto;
+  }
+  .research-title {
+    color: #087e8b;
+    cursor: pointer;
+  }
+  .research-title:hover {
+    color: #0079c1;
+  }
+  .order-button {
+    display: block;
+  }
+  .order-row {
+    margin-top: 40px;
+    margin-bottom: 60px;
+  }
+  .news-rec-grid {
+    width: 80%;
+  }
+  .risk-blurb {
+    margin-top: 45px;
+    text-align: center;
+    margin-bottom: 1px;
+  }
+  .risk-row {
+    margin-bottom: 30px;
+  }
+  .footer {
+    height: 60px;
+    width: 150%;
+    margin-left: -50px;
+    margin-top: 20px;
+    background-color: #0079c1;
+  }
 }

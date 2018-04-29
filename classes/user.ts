@@ -1,8 +1,9 @@
 import { OwnedAsset } from './ownedAsset';
 
 export class User {
-  id: number;
+  _id: number;
   name: String;
+  balance: number;
   riskProfile: number;
   interests: String[];
   ownedAssets: OwnedAsset[];

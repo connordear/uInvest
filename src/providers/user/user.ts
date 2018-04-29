@@ -23,16 +23,15 @@ export class UserProvider {
   }
 
   updateUser(user: User) {
-    let url = `${this.usersUrl}/${user.id}`;
+    let url = `${this.usersUrl}/${user._id}`;
     let body = JSON.stringify(user);
     let headers = new HttpHeaders({'Content-Type': 'application/json'});
-
     return this.http.put(url, body, {headers: headers})
                     .catch(err => this.handleError(err));
   }
 
   delete(user: User) {
-    let url = `${this.usersUrl}/${user.id}`;
+    let url = `${this.usersUrl}/${user._id}`;
     let headers = new HttpHeaders({'Content-Type': 'application/json'});
 
     return this.http.delete(url, {headers: headers})
@@ -42,6 +41,6 @@ export class UserProvider {
 
   handleError(err) {
     console.log(err);
-    return Observable.throw( err || 'Server error');
+    return Observable.throw(err || 'Server error');
   }
 }

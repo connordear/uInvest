@@ -35,6 +35,7 @@ app.use(function(req, res, next) {
 // Models
 var User = mongoose.model('User', {
   name: String,
+  balance: Number,
   riskProfile: Number,
   interests: [String],
   ownedAssets: [
@@ -72,6 +73,7 @@ var User = mongoose.model('User', {
         // create a User, information comes from request from Ionic
         User.create({
             name: req.body.name,
+            balance: req.body.balance,
             riskProfile: req.body.riskProfile,
             interests: req.body.interests,
             ownedAssets: req.body.ownedAssets
@@ -95,6 +97,7 @@ var User = mongoose.model('User', {
         // Update a user
         User.findById(req.params.user_id, function(err, user) {
           user.name = req.body.name;
+          user.balance = req.body.balance;
           user.riskProfile = req.body.riskProfile;
           user.interests = req.body.interests;
           user.ownedAssets = req.body.ownedAssets;

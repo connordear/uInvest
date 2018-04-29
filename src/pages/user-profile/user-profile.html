@@ -7,9 +7,11 @@
 
 
 <ion-content padding>
-  <ion-card>
-  </ion-card>
-
+  <ion-item class="balances" no-lines>
+    <ion-label class="balance">
+      Account Value: {{ totalAssets | currency:'CAD':'symbol-narrow':'4.2-2' }}
+    </ion-label>
+  </ion-item>
   <ion-list class="asset-list">
     <ion-list-header>
       <ion-label>
@@ -25,7 +27,10 @@
         Market Value
       </ion-label>
       <ion-label>
-        Price
+        Current Price
+      </ion-label>
+      <ion-label>
+        Unrealized Gain/Loss
       </ion-label>
     </ion-list-header>
     <ion-item-sliding #slidingItem *ngFor="let asset of assets; let i = index;">
@@ -34,23 +39,120 @@
           {{ asset.symbol }}
         </ion-label>
         <ion-label>
-          {{ user.ownedAssets[i].quantity }}
+          {{ user.ownedAssets[i].quantity | number:'1.2-2' }}
         </ion-label>
         <ion-label>
-          {{ user.ownedAssets[i].bookValue }}
+          {{ user.ownedAssets[i].bookValue | number:'1.2-2' }}
         </ion-label>
         <ion-label>
-          {{ user.ownedAssets[i].quantity * asset.price }}
+          {{ user.ownedAssets[i].quantity * asset.price | number:'1.2-2' }}
         </ion-label>
         <ion-label>
-          {{ asset.price }}
+          {{ asset.price | number:'1.2-2' }}
         </ion-label>
-        </ion-item>
-        <ion-item-options>
-          <button ion-button (click)="navToOrder(user, asset); slidingItem.close()">
+        <ion-label [ngClass]="{red: (user.ownedAssets[i].quantity * asset.price - user.ownedAssets[i].bookValue < 0), green: (user.ownedAssets[i].quantity * asset.price - user.ownedAssets[i].bookValue > 0)}">
+          {{ (user.ownedAssets[i].quantity * asset.price - user.ownedAssets[i].bookValue) | number:'1.2-2' }}
+        </ion-label>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button (click)="navToOrder(user, asset); slidingItem.close()">
             Buy/Sell
           </button>
-        </ion-item-options>
+      </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+
+
+  <!-- Order Row -->
+  <ion-grid class="news-rec-grid">
+    <ion-row class="order-row">
+      <ion-col align-self-end>
+        <h3 class="cash-balance">
+          Cash Balance: {{ user.balance | currency:'CAD':'symbol-narrow':'4.2-2' }}
+        </h3>
+      </ion-col>
+      <ion-col align-self-start>
+        <button
+          class="order-button"
+          ion-button
+          primary
+          (click)="navToOrder(user, null)"
+        >
+          Place New Order
+        </button>
+      </ion-col>
+    </ion-row>
+
+
+
+      <!-- Risk Profile -->
+    <ion-row class="risk-row" justify-content-center>
+      <ion-col col-6-lg>
+        <h3 class="balances secondary balance">Current Risk Level: {{ user.riskProfile }}</h3>
+        <ion-item no-lines padding>
+          <ion-range min="1" max="10" step="1" snaps="true" color="secondary" [(ngModel)]="user.riskProfile"></ion-range>
+        </ion-item>
+      </ion-col>
+      <ion-col col-6-lg>
+        <h3 class="balances secondary balance">
+          Risk Assessment
+        </h3>
+        <p class="risk-blurb">Your current level of risk is aligned with your current portfolio.</p>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-row justify-content-center>
+      <!-- Research -->
+      <ion-col col-6>
+        <ion-list class="research">
+          <ion-list-header>
+            <ion-label>
+              Recent News
+            </ion-label>
+          </ion-list-header>
+          <ion-item *ngFor="let article of (research.articles ? research.articles.slice(0, 5): [])">
+            <h2 class="research-title" (click)=navToArticle(article.url)><strong>{{ article.title }}</strong></h2>
+            <h4 class="research-description">{{ article.description }}</h4>
+            <button ion-button icon-only clear item-end (click)=navToArticle(article.url)>
+                <ion-icon name="link"></ion-icon>
+              </button>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      <!-- Asset Recommendations -->
+      <ion-col col-6>
+        <ion-list>
+          <ion-list-header>
+            <ion-label>
+              Symbol
+            </ion-label>
+            <ion-label>
+              Price
+            </ion-label>
+            <ion-label>
+              Change (24h)
+            </ion-label>
+          </ion-list-header>
+          <ion-item-sliding #slidingItem *ngFor="let asset of assets; let i = index;">
+            <ion-item>
+              <ion-label>
+                {{ asset.symbol }}
+              </ion-label>
+              <ion-label>
+                {{ asset.price | number:'1.2-2' }}
+              </ion-label>
+            </ion-item>
+            <ion-item-options>
+              <button ion-button (click)="navToOrder(user, asset); slidingItem.close()">
+                  Buy/Sell
+                </button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div class="footer">
+  </div>
 </ion-content>

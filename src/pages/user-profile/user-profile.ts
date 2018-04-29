@@ -22,7 +22,8 @@ export class UserProfilePage {
 
   user: User;
   assets: Asset[];
-  url: string;
+  totalAssets: number;
+  research: any;
 
   constructor(
     public userProvider: UserProvider,
@@ -32,41 +33,88 @@ export class UserProfilePage {
   ) {
     this.user = navParams.get('user');
     this.assets = new Array<Asset>();
-    var baseUrl = "https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES";
-    var symbols = "&symbols=";
-    var apiKey = "&apikey=TRDOTVDYQ5Y7A9XX"
-    for (let asset of this.user.ownedAssets) {
-      symbols += asset.symbol + ",";
-    }
-    this.url = baseUrl + symbols + apiKey;
-
-    this.http.get(this.url).subscribe(data => {
-        this.buildAssets(data["Stock Quotes"]);
-        console.log(this.assets);
-    });
+    this.loadAssets();
+    this.loadResearch();
   }
 
   ionViewDidLoad() {
 
   }
 
+  loadAssets() {
+    var baseUrl = "https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES";
+    var symbols = "&symbols=";
+    var apiKey = "&apikey=TRDOTVDYQ5Y7A9XX"
+    for (let asset of this.user.ownedAssets) {
+      symbols += asset.symbol + ",";
+    }
+    var url: string = baseUrl + symbols + apiKey;
+    this.http.get(url).subscribe(data => {
+        this.buildAssets(data["Stock Quotes"]);
+        this.calculateTotal();
+        console.log(this.assets);
+    });
+  }
+
+
   buildAssets(data: any[]) {
-    for (var i = 0; i < data.length; i++) {
-      var newAss : Asset = new Asset();
-      var currentItem = data[i];
-      newAss.symbol = currentItem["1. symbol"];
-      newAss.price = currentItem["2. price"];
-      newAss.volume = currentItem["3. volume"];
-      newAss.timestamp = currentItem["4. timestamp"];
-      this.assets.push(newAss);
+    if (data.length > 0) {
+      for (var i = 0; i < data.length; i++) {
+        var newAss : Asset = new Asset();
+        var currentItem = data[i];
+        newAss.symbol = currentItem["1. symbol"];
+        newAss.price = currentItem["2. price"];
+        newAss.volume = currentItem["3. volume"];
+        newAss.timestamp = currentItem["4. timestamp"];
+        this.assets.push(newAss);
+      }
     }
   }
 
   navToOrder(user: User, asset: Asset) {
     this.navCtrl.push(OrderPage, {
       user: user,
-      asset: asset
+      asset: asset,
+      callback: this.updateUser
     });
   }
+
+  updateUser = (updatedUser) => {
+    return new Promise((resolve, reject) => {
+      this.user = updatedUser;
+      resolve();
+    });
+  }
+
+  calculateTotal = () => {
+    this.totalAssets = this.user.balance;
+    for (var i = 0; i < this.assets.length; i++) {
+      this.totalAssets += (+this.assets[i].price * this.user.ownedAssets[i].quantity);
+    }
+
+  }
+
+  loadResearch = () => {
+    this.research = new Array<any>();
+    var query = 'q=';
+    var url = 'https://newsapi.org/v2/top-headlines?' +
+      'sources=bloomberg,techcrunch,the-new-york-times,financial-times,financial-post&' +
+      'apiKey=d5feddf7468e4a139eabefd17183a30f';
+    console.log(url);
+    this.http.get(url).subscribe(data => {
+        this.research = data;
+        console.log(this.research);
+    });
+  }
+
+  navToArticle = (url: string) => {
+    window.open(url);
+  }
+
+  // loadRecommendatons = () => {
+  //   var recommendations: Asset[] = new Array<Asset>();
+  // }
+
+
 
 }
