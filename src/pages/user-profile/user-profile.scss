@@ -26,6 +26,9 @@ page-user-profile {
   .red {
     color: #ed1c24;
   }
+  .yellow {
+    color: #efca08;
+  }
   .green {
     color: #04e762;
   }
@@ -46,6 +49,7 @@ page-user-profile {
     margin-top: 40px;
     margin-bottom: 60px;
   }
+
   .news-rec-grid {
     width: 80%;
   }
@@ -63,5 +67,9 @@ page-user-profile {
     margin-left: -50px;
     margin-top: 20px;
     background-color: #0079c1;
+  }
+  .asset-rec {
+    margin-top: 15px;
+    text-align: center;
   }
 }

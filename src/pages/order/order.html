@@ -18,11 +18,11 @@
     <ion-list radio-group [(ngModel)]="buyOrSell">
       <ion-item item-content>
         <ion-label>Buy</ion-label>
-        <ion-radio value="buy" checked></ion-radio>
+        <ion-radio value="buy" checked class="buy-sell-rb"></ion-radio>
       </ion-item>
       <ion-item>
         <ion-label>Sell</ion-label>
-        <ion-radio value="sell"></ion-radio>
+        <ion-radio class="buy-sell-rb" value="sell"></ion-radio>
       </ion-item>
     </ion-list>
     <ion-item>
@@ -53,11 +53,15 @@
     </ion-item>
     <ion-item>
       <ion-label>Price</ion-label>
-      <ion-label #cost>{{ asset.price }}</ion-label>
+      <ion-label #cost>{{ asset.price | currency:'CAD':'symbol-narrow':'1.2-2' }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Current Funds</ion-label>
+      <ion-label #cost>{{ user.balance | currency:'CAD':'symbol-narrow':'1.2-2' }}</ion-label>
     </ion-item>
     <ion-item>
       <ion-label>Total</ion-label>
-      <ion-label #total type="text">{{ asset.price * quantity.value }}</ion-label>
+      <ion-label #total type="text">{{ asset.price * quantity.value | currency:'CAD':'symbol-narrow':'1.2-2' }}</ion-label>
     </ion-item>
     <button ion-button block (click)="submitOrder(quantity.value)">Submit Order</button>
   </ion-card>

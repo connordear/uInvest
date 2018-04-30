@@ -21,6 +21,7 @@ export class OrderPage {
 
   user: User;
   asset: Asset;
+  quantity: number;
   buyOrSell: string;
   callback: any;
 
@@ -75,7 +76,7 @@ export class OrderPage {
         newOwnedAsset.bookValue = +this.asset.price * +qty;
         this.user.ownedAssets.push(newOwnedAsset);
       }
-
+      this.user.balance -= (+this.asset.price * +qty);
     } else if (this.buyOrSell == "sell") {
       // sell
       if (this.user.ownedAssets[index].quantity > +qty && alreadyOwns) {
@@ -85,6 +86,7 @@ export class OrderPage {
         console.log("Not enough minerals");
         return;
       }
+      this.user.balance += (+this.asset.price * +qty);
     } else {
       this.navCtrl.pop();
     }

@@ -9,14 +9,33 @@
 
 <ion-content padding>
   Select a User to begin exploring!
-  <ion-list>
-    <ion-item *ngFor="let user of users">
-      <button
-        ion-button
-        (click)="navToUser(user);"
-      >
-        {{ user.name }}
-      </button>
+  <ion-list class="home-list" *ngFor="let user of users">
+    <ion-list-header>
+      <ion-label>
+        Profile
+      </ion-label>
+      <ion-label>
+        Level of Risk
+      </ion-label>
+      <ion-label>
+        Interests
+      </ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-label>
+        <button
+          ion-button
+          (click)="navToUser(user);"
+        >
+          {{ user.name | uppercase }}'S PROFILE
+        </button>
+      </ion-label>
+      <ion-label class="big-text">
+        {{ user.riskProfile }}
+      </ion-label>
+      <ion-label class="big-text">
+        {{ user.interests[0] }}
+      </ion-label>
     </ion-item>
   </ion-list>
 

@@ -44,12 +44,6 @@ var User = mongoose.model('User', {
       quantity: Number,
       bookValue: Number
     }
-  ],
-  recommendations: [
-    {
-      symbol: String,
-      riskLevel: String
-    }
   ]
 });
 
@@ -82,8 +76,7 @@ var User = mongoose.model('User', {
             balance: req.body.balance,
             riskProfile: req.body.riskProfile,
             interests: req.body.interests,
-            ownedAssets: req.body.ownedAssets,
-            recommendations: req.body.recommendations,
+            ownedAssets: req.body.ownedAssets
         }, function(err, user) {
             if (err)
                 res.send(err);
@@ -108,7 +101,6 @@ var User = mongoose.model('User', {
           user.riskProfile = req.body.riskProfile;
           user.interests = req.body.interests;
           user.ownedAssets = req.body.ownedAssets;
-          user.recommendations = req.body.recommendations;
           user.save(function (err, updatedUser) {
             if (err) {
               res.send(err);

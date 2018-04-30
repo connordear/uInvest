@@ -1,4 +1,5 @@
 import { OwnedAsset } from './ownedAsset';
+import { Recommendation } from './recommendation';
 
 export class User {
   _id: number;
@@ -7,4 +8,5 @@ export class User {
   riskProfile: number;
   interests: String[];
   ownedAssets: OwnedAsset[];
+  recommendations: Recommendation[];
 }
