@@ -131,5 +131,6 @@ var User = mongoose.model('User', {
 
 
 // listen (start app with node server.js) ======================================
-app.listen(8080);
-console.log("App listening on port 8080");
+app.listen(process.env.PORT || 8080, function() {
+  console.log("Express Server listening on port %d in %s mode", this.address().port, app.settings.env)
+});
