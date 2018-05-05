@@ -9,7 +9,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { UserProvider } from '../providers/user/user';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
-import { OrderPage } from '../pages/order/order';
+import { OrderPageModule } from '../pages/order/order.module';
 import { AssetProvider } from '../providers/asset/asset';
 
 @NgModule({
@@ -17,11 +17,11 @@ import { AssetProvider } from '../providers/asset/asset';
     MyApp,
     HomePage,
     UserProfilePage,
-    OrderPage
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    OrderPageModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -29,7 +29,6 @@ import { AssetProvider } from '../providers/asset/asset';
     MyApp,
     HomePage,
     UserProfilePage,
-    OrderPage,
   ],
   providers: [
     StatusBar,
