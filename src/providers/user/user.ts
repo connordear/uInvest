@@ -11,7 +11,7 @@ import { User } from '../../../classes/user';
 */
 @Injectable()
 export class UserProvider {
-  usersUrl = "http://localhost:8080/api/users";
+  usersUrl = "/api/users";
 
   constructor(public http: HttpClient) {
 
