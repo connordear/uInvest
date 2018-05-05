@@ -8,7 +8,7 @@
     "node": "9.3.0"
   },
   "scripts": {
-    "start": "node server/server.js",
+    "start": "node server.js",
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
@@ -34,7 +34,16 @@
     "ionicons": "3.0.0",
     "rxjs": "5.5.10",
     "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.26"
+    "zone.js": "0.8.26",
+    "mongoose": "^4.6.2",
+    "body-parser": "^1.15.2",
+    "cors": "^2.8.0",
+    "del": "2.2.0",
+    "express": "^4.14.0",
+    "http": "0.0.0",
+    "method-override": "^2.3.6",
+    "morgan": "^1.7.0",
+    "superlogin": "^0.6.1"
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.9",
