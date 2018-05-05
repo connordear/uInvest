@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "An MVP of the uInvest application",
   "engines": {
-    "node": "5.9.1"
+    "node": "9.3.0"
   },
   "main": "server.js",
   "scripts": {
