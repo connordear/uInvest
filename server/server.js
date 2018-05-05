@@ -9,6 +9,8 @@ var cors = require('cors');
 
 var MONGODB_URI = process.env.MONGODB_URI || 'mongodb://heroku_k706z12s:l8kemdsfu33k8p4dtsokenid9v@ds153869.mlab.com:53869/heroku_k706z12s';
 
+var port = process.env.PORT || 8080;
+
 // Configuration
 mongoose.connect(MONGODB_URI, {
   useMongoClient: true,
@@ -132,6 +134,6 @@ var User = mongoose.model('User', {
 
 
 // listen (start app with node server.js) ======================================
-app.listen(process.env.PORT || 8080, function() {
+app.listen(port, function() {
   console.log("Express Server listening on port %d in %s mode", this.address().port, app.settings.env)
 });
