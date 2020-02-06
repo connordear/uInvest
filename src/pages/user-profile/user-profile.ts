@@ -50,35 +50,46 @@ export class UserProfilePage {
 
 
   loadAssets() {
-    var baseUrl = "https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES";
-    var symbols = "&symbols=";
+    var baseUrl = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE";
+    var symbol = "&symbol=";
     var apiKey = "&apikey=TRDOTVDYQ5Y7A9XX"
+    console.log(this.user);
     for (let asset of this.user.ownedAssets) {
-      symbols += asset.symbol + ",";
-    }
-    var url: string = baseUrl + symbols + apiKey;
-    this.http.get(url).subscribe(data => {
-        this.buildAssets(data["Stock Quotes"]);
+      console.log("user asset: " + asset.symbol);
+      var currSymbol = symbol + asset.symbol;
+      var currURL: string = baseUrl + currSymbol + apiKey;
+      console.log(currURL);
+      this.http.get(currURL).subscribe(data => {
+        this.buildAsset(data["Global Quote"]);
         this.calculateTotal();
-        // console.log(this.assets);
     });
+    }
   }
 
   loadRecommendatons() {
-    var baseUrl = "https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES";
-    var symbols = "&symbols=";
+    var baseUrl = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE";
+    var symbol = "&symbol=";
     var apiKey = "&apikey=TRDOTVDYQ5Y7A9XX"
     for (let rec of this.user.recommendations) {
-      symbols += rec.symbol + ",";
+      var currSymbol = symbol + rec.symbol;
+      var currURL: string = baseUrl + currSymbol + apiKey;
+      this.http.get(currURL).subscribe(data => {
+          this.buildRecommendation(data["Global Quote"]);
+      });
     }
-    var url: string = baseUrl + symbols + apiKey;
-    console.log(url);
-    this.http.get(url).subscribe(data => {
-        this.buildRecommendations(data["Stock Quotes"]);
-        console.log(this.recommendationAssets);
-    });
   }
 
+  buildAsset(data: any) {
+    if (data !== undefined) {
+
+      var newAss : Asset = new Asset();
+      newAss.symbol = data["01. symbol"];
+      console.log(newAss.symbol);
+      newAss.price = data["05. price"];
+      newAss.volume = data["06. volume"];
+      this.assets.push(newAss);
+    }
+  }
 
   buildAssets(data: any[]) {
     if (data.length > 0) {
@@ -100,12 +111,23 @@ export class UserProfilePage {
       for (var i = 0; i < data.length; i++) {
         var newAss : Asset = new Asset();
         var currentItem = data[i];
-        newAss.symbol = currentItem["1. symbol"];
-        newAss.price = currentItem["2. price"];
-        newAss.volume = currentItem["3. volume"];
-        newAss.timestamp = currentItem["4. timestamp"];
+        newAss.symbol = currentItem["01. symbol"];
+        newAss.price = currentItem["05. price"];
+        newAss.volume = currentItem["06. volume"];
+        // newAss.timestamp = currentItem["04. timestamp"];
         this.recommendationAssets.push(newAss);
       }
+    }
+  }
+
+  buildRecommendation(data: any) {
+    if (data !== undefined) {
+      var newAss : Asset = new Asset();
+      newAss.symbol = data["01. symbol"];
+      newAss.price = data["05. price"];
+      newAss.volume = data["06. volume"];
+      // newAss.timestamp = data["04. timestamp"];
+      this.recommendationAssets.push(newAss);
     }
   }
 

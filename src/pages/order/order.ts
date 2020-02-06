@@ -37,17 +37,17 @@ export class OrderPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad OrderPage');
+    // console.log('ionViewDidLoad OrderPage');
   }
 
   changeAsset(newSymbol: string) {
     console.log("Changing asset...");
-    var baseUrl = "https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES";
-    var symbols = "&symbols=" + newSymbol;
+    var baseUrl = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE";
+    var symbol = "&symbol=" + newSymbol;
     var apiKey = "&apikey=TRDOTVDYQ5Y7A9XX"
-
-    this.http.get(baseUrl + symbols + apiKey).subscribe(
-      success => {this.buildAsset(success["Stock Quotes"][0])},
+    console.log(baseUrl+symbol+apiKey);
+    this.http.get(baseUrl + symbol + apiKey).subscribe(
+      success => {this.buildAsset(success["Global Quote"])},
       error => {console.log(error);}
     );
   }
@@ -97,15 +97,14 @@ export class OrderPage {
   }
 
   buildAsset(data: any) {
-      if (data != null) {
+      if (data !== undefined) {
         var newAss : Asset = new Asset();
-        newAss.symbol = data["1. symbol"];
-        newAss.price = data["2. price"];
-        newAss.volume = data["3. volume"];
-        newAss.timestamp = data["4. timestamp"];
+        newAss.symbol = data["01. symbol"];
+        newAss.price = data["05. price"];
+        newAss.volume = data["06. volume"];
         this.asset = newAss;
       } else {
-        console.log("Data was null or undefined");
+        console.log("Data was undefined");
       }
 
   }

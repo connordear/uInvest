@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "node server.js",
+    "dev": "ionic build; node server.js",
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
